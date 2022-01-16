@@ -1,5 +1,7 @@
 <script lang="ts">
   import { Cell, CellData, evaluteExpr, Grid, parseExpr } from "./expr";
+  import { makeDepGraph, pair } from "./dep";
+
   function makeCell(value: string): CellData {
     return {
       value,
@@ -13,36 +15,6 @@
       [makeCell("five"), makeCell("six")],
     ],
   };
-
-  interface DepGraph {
-    dependees: Map<number, Cell[]>;
-  }
-
-  /** pairing function so we can store cells in a map as a number (otherwise it uses ref equality) */
-  function pair({ i, j }: Cell): number {
-    return 0.5 * (i + j) * (i + j + 1) + j;
-  }
-
-  function makeDepGraph(grid: Grid): DepGraph {
-    const dependees = new Map<number, Cell[]>();
-    grid.cells.forEach((row, i) => {
-      row.forEach((col, j) => {
-        const expr = parseExpr(col.value);
-        switch (expr.type) {
-          case "cell":
-            const cell = { i, j };
-            const n = pair(expr.cell);
-            if (!dependees.has(n)) dependees.set(n, []);
-            dependees.get(n)!.push(cell);
-          case "literal":
-            break;
-          default:
-            const _: never = expr;
-        }
-      });
-    });
-    return { dependees };
-  }
 
   function recalculate(cell: Cell) {
     // TODO do an incremental update to the dependency graph

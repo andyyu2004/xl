@@ -1,8 +1,7 @@
-import { makeExprParser } from "./expr";
+import { makeCellExpr, makeExprParser } from "./expr";
 
 test("parse cell expr", () => {
-  expect(makeExprParser("A1").parseExpr()).toEqual({
-    type: "cell",
-    cell: { row: 0, col: 0 },
-  });
+  expect(makeExprParser("A1").parseExpr()).toEqual(
+    makeCellExpr({ i: 0, j: 0 })
+  );
 });

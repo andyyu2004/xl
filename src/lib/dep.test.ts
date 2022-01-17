@@ -1,9 +1,12 @@
-import type { DepGraph } from "./dep";
+import { makeDepGraph, pair } from "./dep";
+import { Cell, makeCell } from "./grid";
 
-test("parse cell expr", () => {
-  const g: DepGraph<number, string> = {
-    dependees: new Map(),
-  };
-  const cells = [[{ value: "=A1" }]];
-  // expect(makeDepGraph({ cells })).toEqual(g);
+test("test build simple dep graph", () => {
+  const cells = [
+    [makeCell("00"), makeCell("01")],
+    [makeCell("10"), makeCell("=A0")],
+  ];
+  const dependees: Map<number, Cell[]> = new Map();
+  dependees.set(pair({ i: 0, j: 0 }), [{ i: 1, j: 1 }]);
+  expect(makeDepGraph({ cells })).toEqual({ dependees });
 });

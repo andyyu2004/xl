@@ -1,13 +1,9 @@
 <script lang="ts">
-  import { Cell, CellData, evaluteExpr, Grid, parseExpr } from "./expr";
+  import type { Cell, Grid } from "./grid";
+  import { makeCell } from "./grid";
+  import { evaluteExpr, parseExpr } from "./expr";
   import { makeDepGraph, pair } from "./dep";
 
-  function makeCell(value: string): CellData {
-    return {
-      value,
-      display: value,
-    };
-  }
   const grid: Grid = {
     cells: [
       [makeCell("one"), makeCell("two")],

@@ -1,4 +1,5 @@
-import { Cell, Grid, parseExpr } from "./expr";
+import type { Cell, Grid } from "./grid";
+import { parseExpr } from "./expr";
 
 export interface DepGraph<K extends number | string, V> {
   dependees: Map<K, V[]>;

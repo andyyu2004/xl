@@ -1,22 +1,8 @@
+import type { Cell, Grid } from "./grid";
+
 export type Expr = CellExpr | LiteralExpr;
 
-export interface Grid {
-  cells: CellData[][];
-}
-
-export interface CellData {
-  value: string;
-  display: string;
-}
-
 interface ExprBase {}
-
-export interface Cell {
-  /// row index
-  i: number;
-  /// col index
-  j: number;
-}
 
 export function evaluteExpr(grid: Grid, expr: Expr): string {
   switch (expr.type) {
